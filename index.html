@@ -6,100 +6,126 @@
     <!-- meyerwebreset -->
     <link rel="stylesheet" href="./assets/css/Reset.css">
     <!-- js -->
-    <script type="text/javascript" src="assets/javascript/game.js"></script>
+    <script type="text/javascript" src="./assets/javascript/game.js"></script>
     <!-- css -->
     <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 
 <body>
-  <div class="container">
-    <div id="random">Guess what number I am thinking?</div>
-    <div id="win">Wins: </div>
-    <div id="lose">Lose: </div>
-    <div id="guessesLeft">Guesses Left: </div>
-    <div id="lettersGuessed">Letters Guessed: </div>
-  </div>
+    <div class="container">
+        <div id="random">Guess what number I am thinking?</div>
+        <div id="win">Wins: </div>
+        <div id="lose">Lose: </div>
+        <div id="guessesLeft">Guesses Left: </div>
+        <div id="lettersGuessed">Letters Guessed: </div>
+    </div>
 
 
-<script>
+    <script>
 
-/* Grab DOM Elements */
-var winner = document.getElementById("win");
-    var loser = document.getElementById("lose");
-    var guesses = document.getElementById("guessesLeft");
-    var letters = document.getElementById("lettersGuessed");
 
-/* possible letters */
-    var pL = ["a","b","c","d","e","f","g","h","i","j","k","l","m","o","p","q","r","s","t","u","v","w","x","y","z"];
+        /* Grab DOM Elements */
+        var winner = document.getElementById("win");
+        var loser = document.getElementById("lose");
+        var guesses = document.getElementById("guessesLeft");
+        var letters = document.getElementById("lettersGuessed");
 
-/* generated number (index number from above array) */
-    var gN = Math.floor(Math.random() * pL.length);
+        /* possible letters */
+        var pL = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 
-/* generated letter corresponding with the index number(gN) inside of array pL */
-    var gL = pL[gN];
+        /* generated number (index number from above array) */
+        var gN = Math.floor(Math.random() * pL.length);
 
-/* check for gL */
-    console.log(gL);
+        /* generated letter corresponding with the index number(gN) inside of array pL */
+        var gL = pL[gN];
 
-/* variables to hold outputs */
-    var wins = 0;
-    var losses = 0;
-    var numGuessesLeft = 5;
-    var lettersGuessedArray = [""];
+        /* check for gL */
+        console.log(gL);
 
-/* collect a keystroke */
-document.onkeyup = function(event){
+        /* variables to hold outputs */
+        var wins = 0;
+        var losses = 0;
+        var numGuessesLeft = 5;
+        var lettersGuessedArray = [];
 
-// Determines which key was pressed.
-    var userGuess = event.key.toLowerCase();
+        function refreshRandom() {
+            gN = Math.floor(Math.random() * pL.length);
+            gL = pL[gN];
+            console.log(gL)
+            return gL;
 
-/* check for userGuess */
-    console.log(userGuess)
+        }
 
-    /* Correct User Guess */
-        if (userGuess === gL) {
-            wins++;
-            lettersGuessedArray === [""];
-            numGuessesLeft === 5;
-            gL === pL[gN];
-          } 
-              
-    /* Incorrect User Guess  */              
-        if (userGuess !== gL) {
-            losses++;
-            numGuessesLeft--;
-            lettersGuessedArray.push(userGuess);
+        function resetFunction() {
+            wins = 0;
+            losses = 0;
+            numGuessesLeft = 5;
+            lettersGuessedArray = [];
+        }
+
+
+
+        /* collect a keystroke */
+        document.onkeyup = function (event) {
+
+            // Determines which key was pressed.
+            var userGuess = event.key.toLowerCase();
+
+            /* check for userGuess */
+            console.log(userGuess)
+
+            /* Correct User Guess */
+                if (userGuess === gL) {
+                    wins++;
+                    lettersGuessedArray = [];
+                    numGuessesLeft === 5;
+                    refreshRandom();
+                }
+                /* Incorrect User Guess  */
+                else {
+                    losses++;
+                    numGuessesLeft--;
+                    lettersGuessedArray.push(userGuess);
+
+                }    
+            
+            
+
+            if (wins === 5) {
+                alert("You Win!!");
+                resetFunction();
             }
 
-        if (wins == 5) {
-            alert("You Win!!");
+            if (losses === 5) {
+                alert("You Lose!!");
+                resetFunction();
+                refreshRandom();
 
             }
 
-        if (numGuessesLeft == 0) {
-              alert("You Lose!!");
-              
-            }
-    
-    /* check wins, losses, guesses left, letters guessed */
-    console.log("Wins: " + wins);
-    console.log("Losses: " + losses);
-    console.log("Guesses Left: " + numGuessesLeft);
-    console.log("Letters Guessed: " + lettersGuessedArray)
-    
-    /* Write to DOM */
-    winner.textContent = ("Wins: " + wins);
-    loser.textContent = ("Losses: " + losses);
-    guesses.textContent = ("Guesses Left: " + numGuessesLeft);
-    letters.textContent = ("Letters Guessed: " + lettersGuessedArray);
-}
+
+
+
+
+            /* check wins, losses, guesses left, letters guessed */
+            console.log("Wins: " + wins);
+            console.log("Losses: " + losses);
+            console.log("Guesses Left: " + numGuessesLeft);
+            console.log("Letters Guessed: " + lettersGuessedArray)
+
+            /* Write to DOM */
+            winner.textContent = ("Wins: " + wins);
+            loser.textContent = ("Losses: " + losses);
+            guesses.textContent = ("Guesses Left: " + numGuessesLeft);
+            letters.textContent = ("Letters Guessed: " + lettersGuessedArray);
+        }
 
 
 
 
 
 
-</script>
+    </script>
 </body>
 
 </html>
